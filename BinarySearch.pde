@@ -1,5 +1,5 @@
-
-private Item[] store = {new Item(184,14),
+private Item[]store={
+        new Item(184,14),
         new Item(196,60),
         new Item(206,31),
         new Item(2370,65),
@@ -22,64 +22,72 @@ private Item[] store = {new Item(184,14),
 };                             
 public int linearSearch(int catNumToFind)
 {
-    //complete this method
+    for(int i=0;i<store.length;i++){
+        if(store[i].getCatNum()==catNumToFind) 
+          return store[i].getInventory();
+    }
     return -1;
 }
 public int binarySearch(int catNumToFind)
 {
-    //complete this method    
-    return -1;    
+  int low=0;
+  int high=store.length-1;
+  int guess=(high+low)/2;
+  while(high>=low){
+      guess=(high+low)/2;
+    if(store[guess].getCatNum()==catNumToFind) 
+      return store[guess].getInventory();
+    else if(store[guess].getCatNum()>catNumToFind)
+      high=guess-1;
+    else if(store[guess].getCatNum()<catNumToFind) 
+      low=guess+1;
+  } 
+  return -1;
 }
-public int binarySearch(int catNumToFind,int nLow, int nHigh)
+public int binarySearch(int catNumToFind,int nLow,int nHigh)
 {
-    //complete this method    
-    return -1;           
+    if(nLow>nHigh)
+         return -1;
+    int guess=(nHigh+nLow)/2;
+    if(store[guess].getCatNum()>catNumToFind){
+        return binarySearch(catNumToFind,guess+1,nHigh);
+    }
+    else if(store[guess].getCatNum()<catNumToFind){
+        return binarySearch(catNumToFind,nLow,guess-1);
+    }
+    else return store[guess].getInventory();    
 }
 public void setup()
 {
-    int[] tests = {0,183,184,2370,15320,19967,19968};
+    int[] tests={0,183,184,2370,15320,19967,19968};
     System.out.println();
     System.out.println("Testing Linear Search");
-    System.out.println("=====================");
-    for (int i = 0; i < tests.length; i++)
+    for(int i=0;i<tests.length;i++)
     {
-
-        if(linearSearch(tests[i]) != -1)
-            System.out.println("Catalog #"+tests[i]+" has "+linearSearch(tests[i]) + " in stock");
+        if(linearSearch(tests[i])!=-1)
+            System.out.println("Catalog #"+tests[i]+" has "+linearSearch(tests[i])+" in stock");
         else
             System.out.println("Catalog #"+tests[i]+" not found");
     }
     System.out.println();
     System.out.println("Testing Non Recursive Binary Search");
-    System.out.println("===================================");
-    for (int i = 0; i < tests.length; i++)
+    for(int i=0;i<tests.length;i++)
     {
-
-        if(binarySearch(tests[i]) != -1)
-            System.out.println("Catalog #"+tests[i]+" has "+binarySearch(tests[i]) + " in stock");
+        if(binarySearch(tests[i])!=-1)
+            System.out.println("Catalog #"+tests[i]+" has "+binarySearch(tests[i])+" in stock");
         else
             System.out.println("Catalog #"+tests[i]+" not found");
     }
     System.out.println();
     System.out.println("Testing Recursive Binary Search");
-    System.out.println("===============================");
-    for (int i = 0; i < tests.length; i++)
+    for(int i=0;i<tests.length;i++)
     {
-
-        if(binarySearch(tests[i],0,store.length - 1) != -1)
-            System.out.println("Catalog #"+tests[i]+" has "+binarySearch(tests[i],0,store.length - 1) + " in stock");
+        if(binarySearch(tests[i],0,store.length-1)!=-1)
+            System.out.println("Catalog #"+tests[i]+" has "+binarySearch(tests[i],0,store.length-1)+" in stock");
         else
             System.out.println("Catalog #"+tests[i]+" not found");
     }
-
 }
-
 public void draw()
 {
-    //empty!
 }
-
-
-
-
-
